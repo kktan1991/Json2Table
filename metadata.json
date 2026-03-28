@@ -1,0 +1,5 @@
+{
+  "name": "JSON Formatter & Viewer",
+  "description": "A split-pane JSON formatter and viewer with syntax highlighting and collapsible nodes.",
+  "requestFramePermissions": []
+}
