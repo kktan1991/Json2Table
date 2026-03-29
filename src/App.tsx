@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Copy, Trash2, AlignLeft, Shrink, Check, TableProperties, PanelLeftClose, PanelLeft, Download } from 'lucide-react';
 import * as XLSX from 'xlsx';
+import Editor from 'react-simple-code-editor';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-json';
+import 'prismjs/themes/prism-tomorrow.css';
 
 const JsonTable = ({ data, depth = 0 }: { data: any, depth?: number }) => {
   if (data === null) return <span className="text-gray-500 dark:text-gray-400 italic font-semibold">null</span>;
@@ -277,13 +281,22 @@ export default function App() {
             <div className="h-10 border-b border-gray-200 dark:border-gray-800 flex items-center px-4 bg-gray-50/50 dark:bg-gray-900/50">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">JSON Input</span>
             </div>
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Paste your JSON here..."
-              spellCheck={false}
-              className="flex-1 w-full p-4 bg-transparent resize-none focus:outline-none font-mono text-[13px] leading-6 text-gray-800 dark:text-gray-200"
-            />
+            <div className="flex-1 overflow-auto bg-[#1d1f21]">
+              <Editor
+                value={input}
+                onValueChange={setInput}
+                highlight={code => Prism.highlight(code, Prism.languages.json, 'json')}
+                padding={16}
+                style={{
+                  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                  fontSize: 13,
+                  lineHeight: 1.6,
+                  minHeight: '100%',
+                  color: '#c5c8c6'
+                }}
+                textareaClassName="focus:outline-none"
+              />
+            </div>
             {error && (
               <div className="absolute bottom-0 left-0 right-0 bg-red-50 dark:bg-red-900/30 border-t border-red-200 dark:border-red-800 p-3 text-sm text-red-600 dark:text-red-400 font-mono">
                 <div className="font-semibold mb-1">Invalid JSON</div>
